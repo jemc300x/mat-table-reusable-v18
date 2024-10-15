@@ -1,0 +1,16 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  @for (col of columns(); track $index) {
+  <ng-container matColumnDef="{{ col.def }}">
+    <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
+    <td mat-cell *matCellDef="let row">{{ col.content(row) }}</td>
+  </ng-container>
+  }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+  <tr *matNoDataRow>
+    <td class="nodata" [attr.colspan]="displayedColumns().length">
+      @if (isLoading()) { Loading...!!! }@else { No data }
+    </td>
+  </tr>
+</table>
