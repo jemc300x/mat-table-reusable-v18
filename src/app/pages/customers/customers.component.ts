@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   TableColumn,
   UiTableComponent,
 } from '../../shared/components/ui-table/ui-table.component';
 import { timer } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 interface Customer {
   name: string;
@@ -18,11 +19,13 @@ interface Customer {
   imports: [UiTableComponent],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
+  providers: [DatePipe],
 })
 export class CustomersComponent implements OnInit {
   customers: Customer[] = [];
   tableColumns: TableColumn<Customer>[] = [];
   isLoadingCustomers = true;
+  private readonly datePipe = inject(DatePipe);
 
   ngOnInit(): void {
     this.getCustomers();
@@ -44,7 +47,7 @@ export class CustomersComponent implements OnInit {
       {
         label: 'Dob',
         def: 'dob',
-        content: (row) => row.dob.toISOString(),
+        content: (row) => this.datePipe.transform(row.dob, 'dd MMM yyyy'),
       },
       {
         label: 'Gender',

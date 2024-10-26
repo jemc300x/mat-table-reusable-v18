@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   TableColumn,
   UiTableComponent,
 } from '../../shared/components/ui-table/ui-table.component';
 import { timer } from 'rxjs';
+import { CurrencyPipe } from '@angular/common';
 
 interface Product {
   name: string;
@@ -21,11 +22,13 @@ interface Product {
   imports: [UiTableComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
+  providers: [CurrencyPipe],
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
   tableColumns: TableColumn<Product>[] = [];
   isLoadingProducts = true;
+  private readonly currencyPipe = inject(CurrencyPipe);
 
   ngOnInit(): void {
     this.setTableColumns();
@@ -47,7 +50,7 @@ export class ProductsComponent implements OnInit {
       {
         label: 'Price',
         def: 'price',
-        content: (row) => row.price.toString(),
+        content: (row) => this.currencyPipe.transform(row.price, 'PEN', 'S/'),
       },
       {
         label: 'Active',
