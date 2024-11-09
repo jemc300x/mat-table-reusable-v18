@@ -5,3 +5,8 @@
   [columns]="tableColumns"
   [isLoading]="isLoadingCustomers"
 />
+
+<ng-template #colActions let-customer>
+  <button (click)="onEditCustomer(customer)">Edit</button>
+  <button (click)="onDeleteCustomer(customer)">Delete</button>
+</ng-template>

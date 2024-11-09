@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import {
   TableColumn,
   UiTableComponent,
@@ -23,10 +23,19 @@ export class CustomersComponent implements OnInit {
   customers: Customer[] = [];
   tableColumns: TableColumn<Customer>[] = [];
   isLoadingCustomers = true;
+  colActions = viewChild.required('colActions', { read: TemplateRef });
 
   ngOnInit(): void {
     this.getCustomers();
     this.setTableColumns();
+  }
+
+  onEditCustomer(customer: Customer) {
+    console.log('Customer to edit: ', customer);
+  }
+
+  onDeleteCustomer(customer: Customer) {
+    console.log('Customer to delete: ', customer);
   }
 
   setTableColumns() {
@@ -50,6 +59,11 @@ export class CustomersComponent implements OnInit {
         label: 'Gender',
         def: 'gender',
         content: (row) => (row.gender === 'f' ? 'Female' : 'Male'),
+      },
+      {
+        label: 'Actions',
+        def: 'actions',
+        template: this.colActions(),
       },
     ];
   }
