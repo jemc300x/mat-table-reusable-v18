@@ -7,7 +7,7 @@ import { timer } from 'rxjs';
 
 interface Product {
   name: string;
-  cotegory: {
+  category: {
     id: number;
     name: string;
   };
@@ -32,22 +32,35 @@ export class ProductsComponent implements OnInit {
     this.getProducts();
   }
 
+  getSortingDataAccessor() {
+    return (data: Product, sortHeaderId: string) => {
+      if (sortHeaderId === 'category') {
+        return data.category.name;
+      }
+
+      return (data as unknown as Record<string, any>)[sortHeaderId];
+    };
+  }
+
   setTableColumns() {
     this.tableColumns = [
       {
         label: 'Product Name',
         def: 'name',
         content: (row) => row.name,
+        isSortable: true,
       },
       {
         label: 'Category',
-        def: 'cagetory',
-        content: (row) => row.cotegory.name,
+        def: 'category',
+        content: (row) => row.category.name,
+        isSortable: true,
       },
       {
         label: 'Price',
         def: 'price',
         content: (row) => row.price.toString(),
+        isSortable: true,
       },
       {
         label: 'Active',
@@ -63,7 +76,7 @@ export class ProductsComponent implements OnInit {
       this.products = [
         {
           name: 'Laptop i7',
-          cotegory: {
+          category: {
             id: 1,
             name: 'LAPTOP',
           },
@@ -72,7 +85,7 @@ export class ProductsComponent implements OnInit {
         },
         {
           name: 'MacBook Air',
-          cotegory: {
+          category: {
             id: 1,
             name: 'LAPTOP',
           },
@@ -81,7 +94,7 @@ export class ProductsComponent implements OnInit {
         },
         {
           name: 'MacBook Pro',
-          cotegory: {
+          category: {
             id: 1,
             name: 'LAPTOP',
           },
@@ -90,7 +103,7 @@ export class ProductsComponent implements OnInit {
         },
         {
           name: 'Monitor 24',
-          cotegory: {
+          category: {
             id: 2,
             name: 'MONITOR',
           },
@@ -99,7 +112,7 @@ export class ProductsComponent implements OnInit {
         },
         {
           name: 'Monitor 32',
-          cotegory: {
+          category: {
             id: 2,
             name: 'MONITOR',
           },

@@ -40,6 +40,7 @@ export class CustomersComponent implements OnInit {
         label: 'Lastname',
         def: 'lastname',
         content: (row) => row.lastname,
+        isSortable: true,
       },
       {
         label: 'Dob',
