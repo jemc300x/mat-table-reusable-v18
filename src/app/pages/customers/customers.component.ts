@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   TableColumn,
+  TableConfig,
   UiTableComponent,
 } from '../../shared/components/ui-table/ui-table.component';
 import { timer } from 'rxjs';
@@ -23,10 +24,22 @@ export class CustomersComponent implements OnInit {
   customers: Customer[] = [];
   tableColumns: TableColumn<Customer>[] = [];
   isLoadingCustomers = true;
+  tableConfig!: TableConfig;
 
   ngOnInit(): void {
+    this.setTableConfig();
     this.getCustomers();
     this.setTableColumns();
+  }
+
+  onSelectRows(rows: Customer[]) {
+    console.log('Rows: ', rows);
+  }
+
+  setTableConfig() {
+    this.tableConfig = {
+      isSelectable: true,
+    };
   }
 
   setTableColumns() {
