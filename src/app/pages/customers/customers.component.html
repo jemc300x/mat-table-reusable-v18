@@ -4,4 +4,6 @@
   [data]="customers"
   [columns]="tableColumns"
   [isLoading]="isLoadingCustomers"
+  [config]="tableConfig"
+  (pageEvent)="onPageEventTable($event)"
 />
