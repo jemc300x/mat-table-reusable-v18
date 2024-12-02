@@ -70,8 +70,12 @@ export class UiTableComponent<T> implements OnChanges {
       this.selection.clear();
     }
 
-    console.log('OnToggleAll: ', this.selection.selected);
+    console.log('OnToggleAll:  ', this.selection.selected);
     this.selectRowEvent.emit(this.selection.selected);
+  }
+
+  onClearSelection() {
+    this.selection.clear();
   }
 
   private setData() {

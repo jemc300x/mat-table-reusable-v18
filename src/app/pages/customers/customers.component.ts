@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, viewChild } from '@angular/core';
 import {
   TableColumn,
   TableConfig,
@@ -25,6 +25,8 @@ export class CustomersComponent implements OnInit {
   tableColumns: TableColumn<Customer>[] = [];
   isLoadingCustomers = true;
   tableConfig!: TableConfig;
+  customersSelected: Customer[] = [];
+  uiTable = viewChild(UiTableComponent);
 
   ngOnInit(): void {
     this.setTableConfig();
@@ -32,8 +34,14 @@ export class CustomersComponent implements OnInit {
     this.setTableColumns();
   }
 
+  onSendingEmails() {
+    this.customersSelected = [];
+    this.uiTable()?.onClearSelection();
+  }
+
   onSelectRows(rows: Customer[]) {
-    console.log('Rows: ', rows);
+    console.log('Rows:  ', rows);
+    this.customersSelected = rows;
   }
 
   setTableConfig() {
