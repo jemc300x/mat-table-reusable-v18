@@ -1,9 +1,11 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   computed,
   input,
   OnChanges,
   SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
@@ -11,12 +13,13 @@ export interface TableColumn<T> {
   label: string;
   def: string;
   content: (row: T) => string | null | undefined;
+  template?: TemplateRef<any>
 }
 
 @Component({
   selector: 'ui-table',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, NgTemplateOutlet],
   templateUrl: './ui-table.component.html',
   styleUrl: './ui-table.component.scss',
 })

@@ -5,3 +5,53 @@
   [columns]="tableColumns"
   [isLoading]="isLoadingCustomers"
 />
+
+<ng-template #colActions let-customer>
+  @if(isEditMode() && currentCustomer?.id === customer.id){
+    <button (click)="onCancelEdit()">Cancel</button>
+    <button (click)="onSaveCustomer()">Save</button>
+  } @else {
+    <button (click)="onEditCustomer(customer)">Edit</button>
+  }
+</ng-template>
+
+<ng-container [formGroup]="formCustomer">
+
+  <ng-template #colName let-customer>
+    @if(isEditMode() && currentCustomer?.id === customer.id){
+      <input type="text" placeholder="Name" formControlName="name">
+    } @else {
+      {{ customer.name }}
+    }
+  </ng-template>
+  <ng-template #colLastname let-customer>
+    @if(isEditMode() && currentCustomer?.id === customer.id){
+      <input type="text" placeholder="Lastname" formControlName="lastname">
+    } @else {
+      {{ customer.lastname }}
+    }
+  </ng-template>
+  <ng-template #colDob let-customer>
+    @if(isEditMode() && currentCustomer?.id === customer.id){
+      <input matInput [matDatepicker]="picker" placeholder="Dob" formControlName="dob" (click)="picker.open()">
+      <mat-datepicker #picker></mat-datepicker>
+    } @else {
+      {{ customer.dob.toDateString() }}
+    }
+  </ng-template>
+  <ng-template #colGender let-customer>
+    @if(isEditMode() && currentCustomer?.id === customer.id){
+      <mat-select placeholder="Placeholder" name="item" formControlName="gender">
+        @for (item of genderList; track $index) {
+          <mat-option [value]="item.value">
+            {{item.viewValue}}
+          </mat-option>
+        }
+      </mat-select>
+    } @else {
+      {{ customer.gender === 'f' ? 'Female' : 'Male' }}
+    }
+  </ng-template>
+</ng-container>
+
+
